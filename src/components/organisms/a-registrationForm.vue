@@ -1,15 +1,15 @@
 <template>
   <div class="a-form">
-    <form name="register-form" method="POST" >
-      <a-first-name />
-      <a-middle-name />
-      <a-last-name />
-      <a-username />
-      <a-password />
+    <form name="register-form" method="POST" @submit.prevent="store.addUser">
+      <a-first-name v-model="store.userForm.firstName"/>
+      <a-middle-name v-model="store.userForm.middleName"/>
+      <a-last-name v-model="store.userForm.lastName"/>
+      <a-username v-model="store.userForm.username"/>
+      <a-password v-model="store.userForm.password"/>
       <a-button button-type="submit" button-name="add-user"> Register </a-button>
     </form>
 
-    <a-button button-type="submit" button-name="register-user">
+    <a-button button-type="submit" button-name="register-user" @click="router.push('/')">
       Log in
     </a-button>
   </div>
@@ -22,6 +22,11 @@ import ALastName from '../molecules/a-lastName-input.vue'
 import AUsername from '../molecules/a-username-input.vue'
 import APassword from '../molecules/a-password-input.vue'
 import AButton from '../atoms/a-button.vue'
+import { useRouter } from 'vue-router'
+import { useUser } from '../composables/useUser'
+
+const router = useRouter()
+const store = useUser()
 </script>
 
 <style scoped>

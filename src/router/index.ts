@@ -6,15 +6,17 @@ const router = createRouter({
     {
       path: '/',
       name: 'login',
-      component: () => import('../pages/LoginPage.vue')
+      component: () => import('../pages/LoginPage.vue'),
     },
     {
       path: '/register',
       name: 'register',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
       component: () => import('../pages/RegistrationPage.vue'),
+    },
+    {
+      path: '/home',
+      name: 'home',
+      component: () => import('../pages/HomePage.vue'),
       meta: {
         requiresAuth: true
       }
@@ -22,15 +24,19 @@ const router = createRouter({
   ]
 })
 
-router.beforeEach((to, from, next) => {
-  if (to.matched.some((record) => record.meta.requiresAuth)) {
-    if (localStorage.getItem('token') === null) {
+router.beforeEach(async (to, from, next) => {
+  try {
+    const response = await fetch('http://localhost:9000/session', {
+      credentials: 'include'
+    })
+    if (to.meta.requiresAuth && response.status !== 200) {
       next('/')
     } else {
       next()
     }
-  } else {
-    next()
+  } catch (error) {
+    next('/')
+    console.error(error)
   }
 })
 

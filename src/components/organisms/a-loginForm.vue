@@ -5,7 +5,7 @@
       <a-password v-model="store.loginForm.password"/>
       <a-button type="submit" button-name="login-user">Log in</a-button>
     </form>
-    <a-button type="button" button-name="register-user">
+    <a-button type="button" button-name="register-user" @click="router.push('/register')">
       Register
     </a-button>
   </div>
@@ -16,8 +16,10 @@ import AUsername from '../molecules/a-username-input.vue'
 import APassword from '../molecules/a-password-input.vue'
 import AButton from '../atoms/a-button.vue'
 import { useUser } from '../composables/useUser'
+import { useRouter } from 'vue-router'
 
 const store = useUser()
+const router = useRouter()
 </script>
 
 <style scoped>
